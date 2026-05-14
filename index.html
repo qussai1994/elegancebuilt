@@ -1,0 +1,2774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EleganceBuilt Ltd | London's Premier Renovation Specialists</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c97e;
+  --gold-dark: #9a7a30;
+  --dark: #0a0a0a;
+  --dark-2: #111111;
+  --dark-3: #1a1a1a;
+  --dark-4: #222222;
+  --dark-5: #2a2a2a;
+  --text-primary: #f0ede8;
+  --text-secondary: #b8b0a0;
+  --text-muted: #706860;
+  --white: #ffffff;
+  --border: rgba(201,168,76,0.2);
+  --border-light: rgba(201,168,76,0.08);
+  --shadow-gold: 0 0 40px rgba(201,168,76,0.15);
+  --font-display: 'Cormorant Garamond', serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Montserrat', sans-serif;
+  --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-fast: all 0.2s ease;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--dark);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  cursor: default;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, textarea, select { font-family: inherit; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark-2); }
+::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ===== PAGE SYSTEM ===== */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===== GRAIN OVERLAY ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 3rem;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition);
+}
+header.scrolled {
+  height: 65px;
+  background: rgba(10,10,10,0.98);
+  border-bottom-color: var(--border);
+}
+
+/* ===== HAMBURGER & NAV ===== */
+.nav-left { display: flex; align-items: center; gap: 2rem; }
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+.hamburger span {
+  display: block;
+  width: 28px;
+  height: 1.5px;
+  background: var(--gold);
+  transition: var(--transition);
+  transform-origin: left center;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translateY(-1px); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translateY(1px); }
+
+/* ===== DROPDOWN MENU ===== */
+.nav-dropdown {
+  position: fixed;
+  top: 0; left: 0;
+  width: 380px;
+  height: 100vh;
+  background: var(--dark-2);
+  border-right: 1px solid var(--border);
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  padding: 100px 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.nav-dropdown.open { transform: translateX(0); }
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.nav-overlay.open { opacity: 1; pointer-events: all; }
+
+.nav-dropdown .nav-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+.nav-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition);
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+.nav-dropdown a::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: linear-gradient(90deg, rgba(201,168,76,0.1), transparent);
+  transition: width 0.4s ease;
+}
+.nav-dropdown a:hover { color: var(--gold); padding-left: 0.5rem; }
+.nav-dropdown a:hover::before { width: 100%; }
+.nav-dropdown a span.nav-num {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  min-width: 28px;
+}
+
+/* Services sub-menu */
+.nav-services-group { position: relative; }
+.nav-services-toggle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  width: 100%;
+}
+.nav-services-toggle:hover { color: var(--gold); }
+.nav-services-toggle .chevron {
+  margin-left: auto;
+  font-size: 0.8rem;
+  transition: var(--transition);
+}
+.nav-services-toggle.open .chevron { transform: rotate(180deg); }
+.nav-services-sub {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.nav-services-sub.open { max-height: 300px; }
+.nav-services-sub a {
+  font-size: 1.1rem;
+  padding: 0.5rem 0 0.5rem 2.5rem;
+  border-bottom: none;
+  color: var(--text-muted);
+}
+.nav-services-sub a:hover { color: var(--gold-light); }
+
+.nav-contact-btn {
+  margin-top: auto;
+  padding: 1rem 2rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+.nav-contact-btn:hover { background: var(--gold); color: var(--dark); }
+
+/* ===== LOGO ===== */
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.logo-wrap:hover { opacity: 0.85; }
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  position: relative;
+}
+.logo-icon svg { width: 44px; height: 44px; }
+.logo-text { display: flex; flex-direction: column; align-items: flex-end; }
+.logo-text .company-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+.logo-text .company-tag {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    #0a0a0a 0%,
+    #111111 30%,
+    #1a1208 60%,
+    #0a0a0a 100%
+  );
+  z-index: 0;
+}
+.hero-parallax {
+  position: absolute;
+  inset: -20%;
+  z-index: 1;
+  will-change: transform;
+}
+.hero-parallax .p-layer {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0;
+  animation: heroFadeIn 2s forwards;
+}
+.p-layer-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  top: 10%; left: 5%;
+  animation-delay: 0.3s !important;
+}
+.p-layer-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+  top: 40%; right: 10%;
+  animation-delay: 0.6s !important;
+}
+.p-layer-3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+  bottom: 10%; left: 30%;
+  animation-delay: 0.9s !important;
+}
+@keyframes heroFadeIn { to { opacity: 1; } }
+
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+}
+.hero-lines::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 1px; height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.15) 50%, transparent);
+}
+.hero-lines::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.1) 50%, transparent);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 900px;
+}
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: slideUp 0.8s 0.5s forwards;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideUp 0.8s 0.7s forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-title .line-2 {
+  display: block;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-top: 0.2em;
+}
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: slideUp 0.8s 0.9s forwards;
+  text-transform: uppercase;
+}
+.hero-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 2rem;
+  opacity: 0;
+  animation: scaleIn 0.6s 1.1s forwards;
+}
+.hero-ctas {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: slideUp 0.8s 1.2s forwards;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+.btn-primary {
+  padding: 1rem 2.5rem;
+  background: var(--gold);
+  color: var(--dark);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.2);
+  transition: left 0.4s ease;
+}
+.btn-primary:hover::before { left: 100%; }
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,168,76,0.3); }
+
+.btn-secondary {
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+.btn-secondary:hover { background: rgba(201,168,76,0.1); transform: translateY(-2px); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: slideUp 0.8s 1.5s forwards;
+}
+.hero-scroll span {
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(1); opacity: 0.7; }
+  50% { transform: scaleY(1.3); opacity: 1; }
+}
+
+/* ===== SECTIONS ===== */
+.section { padding: 8rem 0; }
+.section-inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
+.section-header { text-align: center; margin-bottom: 5rem; }
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+.section-desc {
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+.gold-line {
+  width: 40px; height: 1px;
+  background: var(--gold);
+  margin: 2rem auto 0;
+}
+
+/* ===== STATS BAR ===== */
+.stats-bar {
+  background: var(--dark-3);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 0;
+}
+.stats-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ===== SERVICES GRID ===== */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5px;
+  background: var(--border-light);
+}
+.service-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--dark-2);
+  cursor: pointer;
+  aspect-ratio: 4/3;
+}
+.service-card-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.3);
+}
+.service-card:hover .service-card-bg {
+  transform: scale(1.08);
+  filter: brightness(0.4);
+}
+.service-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.service-card:hover .service-card-overlay { opacity: 1; }
+.service-card-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem;
+}
+.service-card-num {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 300;
+  color: rgba(201,168,76,0.2);
+  line-height: 1;
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  transition: var(--transition);
+}
+.service-card:hover .service-card-num { color: rgba(201,168,76,0.4); }
+.service-icon {
+  width: 40px; height: 40px;
+  border: 1px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: var(--gold);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+.service-card:hover .service-icon { background: var(--gold); color: var(--dark); }
+.service-card-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.service-card-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.service-card-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: var(--transition);
+  transform: translateX(-10px);
+  opacity: 0;
+}
+.service-card:hover .service-card-arrow { opacity: 1; transform: translateX(0); color: var(--gold); }
+
+/* SVG backgrounds for service cards */
+.svc-bath { background-image: linear-gradient(135deg, #1a1208 0%, #0f0f0f 100%); }
+.svc-kitchen { background-image: linear-gradient(135deg, #0f1a08 0%, #0f0f0f 100%); }
+.svc-house { background-image: linear-gradient(135deg, #0f0f1a 0%, #0f0f0f 100%); }
+.svc-extension { background-image: linear-gradient(135deg, #1a0f08 0%, #0f0f0f 100%); }
+
+/* ===== WHY US ===== */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.why-card {
+  padding: 2.5rem;
+  border: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.why-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+}
+.why-card:hover { border-color: var(--border); transform: translateY(-4px); }
+.why-card:hover::before { transform: scaleX(1); }
+.why-card-icon {
+  width: 50px; height: 50px;
+  border: 1px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  transition: var(--transition);
+}
+.why-card:hover .why-card-icon { background: var(--gold); color: var(--dark); }
+.why-card-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-primary);
+}
+.why-card-text {
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* ===== CALCULATOR ===== */
+.calculator-section { background: var(--dark-2); }
+.calc-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  padding: 3rem;
+  position: relative;
+}
+.calc-wrap::before {
+  content: 'ESTIMATION TOOL';
+  position: absolute;
+  top: -0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--dark-2);
+  padding: 0 1rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.5em;
+  color: var(--gold);
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.calc-field { display: flex; flex-direction: column; gap: 0.5rem; }
+.calc-field label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.calc-field select,
+.calc-field input {
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 1rem 1.2rem;
+  font-size: 0.85rem;
+  outline: none;
+  transition: var(--transition);
+  appearance: none;
+}
+.calc-field select:focus,
+.calc-field input:focus { border-color: var(--gold); }
+.calc-field select { cursor: pointer; }
+.calc-result {
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.calc-result-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.calc-result-amount {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+.calc-result-note {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.calc-btn {
+  width: 100%;
+  padding: 1.2rem;
+  background: var(--gold);
+  color: var(--dark);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+.calc-btn:hover { background: var(--gold-light); }
+.calc-disclaimer {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 1rem;
+  line-height: 1.7;
+}
+
+/* Price per sqm info */
+.price-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-light);
+  margin-bottom: 2rem;
+}
+.price-info-item {
+  background: var(--dark-3);
+  padding: 1.2rem 1rem;
+  text-align: center;
+}
+.price-info-item .pi-service {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+.price-info-item .pi-price {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--gold);
+}
+.price-info-item .pi-unit {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+}
+
+/* ===== REVIEWS ===== */
+.reviews-section { background: var(--dark-3); }
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.review-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border-light);
+  padding: 2rem;
+  position: relative;
+  transition: var(--transition);
+}
+.review-card:hover { border-color: var(--border); transform: translateY(-3px); }
+.review-stars {
+  color: var(--gold);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+.review-quote {
+  font-size: 3rem;
+  color: rgba(201,168,76,0.15);
+  font-family: var(--font-display);
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  line-height: 1;
+}
+.review-text {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.review-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--dark);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.review-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+.review-area {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* Leave Review Form */
+.leave-review {
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  position: relative;
+}
+.leave-review::before {
+  content: 'SHARE YOUR EXPERIENCE';
+  position: absolute;
+  top: -0.6rem;
+  left: 2rem;
+  background: var(--dark-3);
+  padding: 0 1rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+}
+.review-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-field label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.form-field input,
+.form-field textarea,
+.form-field select {
+  background: var(--dark-4);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  padding: 0.9rem 1rem;
+  font-size: 0.85rem;
+  outline: none;
+  transition: var(--transition);
+  resize: none;
+}
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus { border-color: var(--gold); }
+.form-field.full { grid-column: 1/-1; }
+.review-stars-input { display: flex; gap: 0.3rem; margin: 0.5rem 0; }
+.review-stars-input i {
+  font-size: 1.2rem;
+  color: var(--border);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.review-stars-input i.active,
+.review-stars-input i:hover { color: var(--gold); }
+.review-submit {
+  padding: 1rem 2.5rem;
+  background: var(--gold);
+  color: var(--dark);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transition: var(--transition);
+  margin-top: 1rem;
+}
+.review-submit:hover { background: var(--gold-light); }
+
+/* ===== SERVICE PAGE ===== */
+.service-hero {
+  height: 60vh;
+  min-height: 400px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+  margin-top: 80px;
+}
+.service-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.service-hero-bg .sh-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.service-hero-bg .sh-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0.3) 100%);
+}
+.service-hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  width: 100%;
+}
+.service-hero-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.service-hero-label::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+}
+.service-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1;
+}
+.service-hero-title strong { color: var(--gold); font-weight: 600; }
+
+/* Before/After Slider */
+.before-after-section { padding: 6rem 0; }
+.ba-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+.ba-project {
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  transition: var(--transition);
+}
+.ba-project:hover { border-color: var(--border); }
+.ba-slider-wrap {
+  position: relative;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: var(--dark-3);
+  cursor: col-resize;
+}
+.ba-before, .ba-after {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.5);
+}
+.ba-after {
+  clip-path: inset(0 50% 0 0);
+  transition: clip-path 0.1s;
+}
+.ba-divider {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: var(--gold);
+  z-index: 3;
+  cursor: col-resize;
+}
+.ba-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(201,168,76,0.5);
+}
+.ba-label {
+  position: absolute;
+  bottom: 0.8rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  background: rgba(0,0,0,0.7);
+  z-index: 4;
+}
+.ba-label.before { left: 0.8rem; color: var(--text-muted); }
+.ba-label.after { right: 0.8rem; color: var(--gold); }
+.ba-info { padding: 1.5rem; }
+.ba-project-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.ba-project-location {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.ba-project-desc {
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* Placeholder for before/after images */
+.ba-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.ba-placeholder-icon { font-size: 2.5rem; opacity: 0.15; }
+.ba-placeholder-text {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.3;
+}
+
+/* ===== CONTACT PAGE ===== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 4rem;
+  align-items: start;
+}
+.contact-info { display: flex; flex-direction: column; gap: 2rem; }
+.contact-info-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.contact-info-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.contact-info-value {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.contact-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--dark-2);
+  border-top: 1px solid var(--border);
+  padding: 4rem 0 2rem;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.footer-brand { display: flex; flex-direction: column; gap: 1.5rem; }
+.footer-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+.footer-brand-desc {
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 300;
+  max-width: 280px;
+}
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+.social-link {
+  width: 38px; height: 38px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+.social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
+.footer-col h4 {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 0.8rem; }
+.footer-col ul li a {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+.footer-col ul li a:hover { color: var(--gold); }
+.footer-bottom {
+  border-top: 1px solid var(--border-light);
+  padding-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.footer-legal { display: flex; gap: 2rem; }
+.footer-legal a {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+.footer-legal a:hover { color: var(--gold); }
+
+/* ===== WHATSAPP FLOAT ===== */
+.wa-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 990;
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: var(--transition);
+  animation: floatPulse 3s infinite;
+}
+.wa-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(37,211,102,0.6);
+}
+@keyframes floatPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.3); }
+  50% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0); }
+}
+.wa-tooltip {
+  position: absolute;
+  right: calc(100% + 0.8rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  color: var(--text-primary);
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-fast);
+}
+.wa-float:hover .wa-tooltip { opacity: 1; }
+
+/* ===== PORTFOLIO / GALLERY PAGE ===== */
+.gallery-filters {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.filter-btn {
+  padding: 0.6rem 1.5rem;
+  border: 1px solid var(--border);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.filter-btn.active,
+.filter-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-light);
+}
+.gallery-item {
+  aspect-ratio: 4/3;
+  background: var(--dark-3);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.gallery-item-inner {
+  position: absolute;
+  inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  gap: 0.8rem;
+  transition: var(--transition);
+}
+.gallery-item-icon { font-size: 2rem; opacity: 0.1; color: var(--gold); }
+.gallery-item-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(201,168,76,0.08);
+  opacity: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: var(--transition);
+  z-index: 2;
+}
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+.gallery-item-overlay span {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--gold);
+}
+.gallery-item-overlay small {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* ===== ABOUT PAGE ===== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+.about-visual {
+  position: relative;
+  aspect-ratio: 3/4;
+  max-height: 550px;
+}
+.about-visual-bg {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.about-visual-accent {
+  position: absolute;
+  width: 60%; height: 60%;
+  border: 1px solid rgba(201,168,76,0.3);
+  bottom: -1.5rem;
+  right: -1.5rem;
+}
+.about-text .section-label { text-align: left; }
+.about-text .section-title { text-align: left; font-size: 2.5rem; }
+.about-text .section-desc { text-align: left; margin: 0; max-width: 100%; }
+.about-quote {
+  border-left: 2px solid var(--gold);
+  padding-left: 2rem;
+  margin: 2rem 0;
+}
+.about-quote p {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.team-card { text-align: center; }
+.team-avatar {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  border: 1px solid var(--border);
+  background: var(--dark-3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--gold);
+}
+.team-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+.team-role {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-in-up:nth-child(2) { transition-delay: 0.1s; }
+.fade-in-up:nth-child(3) { transition-delay: 0.2s; }
+.fade-in-up:nth-child(4) { transition-delay: 0.3s; }
+
+/* ===== PAGE TRANSITION ===== */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--dark);
+  z-index: 9998;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  pointer-events: none;
+}
+
+/* ===== UTILITY ===== */
+.dark-section { background: var(--dark); }
+.dark-2-section { background: var(--dark-2); }
+.dark-3-section { background: var(--dark-3); }
+.text-center { text-align: center; }
+.mt-2 { margin-top: 2rem; }
+.mb-2 { margin-bottom: 2rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  header { padding: 0 1.5rem; }
+  .section-inner { padding: 0 1.5rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .why-grid { grid-template-columns: 1fr; }
+  .calc-grid { grid-template-columns: 1fr; }
+  .price-info { grid-template-columns: repeat(2, 1fr); }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .review-form-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .ba-grid { grid-template-columns: 1fr; }
+  .contact-form-grid { grid-template-columns: 1fr; }
+  .nav-dropdown { width: 300px; }
+}
+@media (max-width: 600px) {
+  .hero-title { font-size: 2.8rem; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .price-info { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE TRANSITION -->
+<div class="page-transition" id="pageTransition"></div>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <div class="nav-left">
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="logo-wrap" onclick="showPage('home')" style="display:flex;align-items:center;gap:0.75rem;">
+    <img src="images/logo.png" alt="EleganceBuilt" style="height:50px;width:50px;object-fit:contain;border-radius:4px;" />
+    <div class="logo-text">
+      <span class="company-name">EleganceBuilt</span>
+      <span class="company-tag">London · Est. 2020</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV OVERLAY -->
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+
+<!-- DROPDOWN NAV -->
+<nav class="nav-dropdown" id="navDropdown">
+  <span class="nav-label">Navigation</span>
+  <a onclick="showPage('home'); toggleNav()"><span class="nav-num">01</span> Home</a>
+  <div class="nav-services-group">
+    <div class="nav-services-toggle" onclick="toggleServicesNav(this)">
+      <span class="nav-num">02</span> Services
+      <i class="fas fa-chevron-down chevron"></i>
+    </div>
+    <div class="nav-services-sub" id="servicesSubNav">
+      <a onclick="showPage('bathroom'); toggleNav()">— Bathroom Renovation</a>
+      <a onclick="showPage('kitchen'); toggleNav()">— Kitchen Renovation</a>
+      <a onclick="showPage('house'); toggleNav()">— Full House Renovation</a>
+      <a onclick="showPage('extension'); toggleNav()">— House Extension</a>
+    </div>
+  </div>
+  <a onclick="showPage('portfolio'); toggleNav()"><span class="nav-num">03</span> Portfolio</a>
+  <a onclick="showPage('gallery'); toggleNav()"><span class="nav-num">04</span> Gallery</a>
+  <a onclick="showPage('about'); toggleNav()"><span class="nav-num">05</span> About Us</a>
+  <a onclick="showPage('contact'); toggleNav()" class="nav-contact-btn"><span class="nav-num">06</span> Get a Quote</a>
+</nav>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/447493302466" target="_blank" title="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <div class="wa-tooltip">Chat with us on WhatsApp</div>
+</a>
+
+<!-- ========================= HOME PAGE ========================= -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-parallax" id="heroParallax">
+        <div class="p-layer p-layer-1"></div>
+        <div class="p-layer p-layer-2"></div>
+        <div class="p-layer p-layer-3"></div>
+      </div>
+      <div class="hero-lines"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">London's Premier Renovation Specialists</div>
+      <h1 class="hero-title">
+        Where <em>Vision</em> Meets
+        <span class="line-2">Craftsmanship</span>
+      </h1>
+      <p class="hero-sub">Bathrooms · Kitchens · Full Renovations · Extensions</p>
+      <div class="hero-divider"></div>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="showPage('contact')">Get a Free Quote</button>
+        <button class="btn-secondary" onclick="showPage('portfolio')">View Our Work</button>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item fade-in-up">
+        <div class="stat-num" data-count="150">0</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-item fade-in-up">
+        <div class="stat-num" data-count="6">0</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item fade-in-up">
+        <div class="stat-num" data-count="98">0</div>
+        <div class="stat-label">% Client Satisfaction</div>
+      </div>
+      <div class="stat-item fade-in-up">
+        <div class="stat-num" data-count="4">0</div>
+        <div class="stat-label">Awards Won</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">What We Do</span>
+        <h2 class="section-title">Our <em>Services</em></h2>
+        <p class="section-desc">From luxurious bathroom transformations to full home renovations, we deliver exceptional results with meticulous attention to detail.</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="services-grid">
+        <div class="service-card svc-bath fade-in-up" onclick="showPage('bathroom')">
+          <div class="service-card-bg" style="background:url('images/hero-bathroom.png') center/cover no-repeat;filter:brightness(0.35);"></div>
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-num">01</div>
+            <div class="service-icon"><i class="fas fa-bath"></i></div>
+            <div class="service-card-tag">Bathroom Renovation</div>
+            <div class="service-card-title">Luxury Bathroom Design</div>
+            <div class="service-card-arrow">
+              <span>Explore</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+        <div class="service-card svc-kitchen fade-in-up" onclick="showPage('kitchen')">
+          <div class="service-card-bg" style="background:url('images/hero-kitchen.png') center/cover no-repeat;filter:brightness(0.35);"></div>
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-num">02</div>
+            <div class="service-icon"><i class="fas fa-utensils"></i></div>
+            <div class="service-card-tag">Kitchen Renovation</div>
+            <div class="service-card-title">Bespoke Kitchen Design</div>
+            <div class="service-card-arrow">
+              <span>Explore</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+        <div class="service-card svc-house fade-in-up" onclick="showPage('house')">
+          <div class="service-card-bg" style="background:url('images/hero-house.png') center/cover no-repeat;filter:brightness(0.35);"></div>
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-num">03</div>
+            <div class="service-icon"><i class="fas fa-home"></i></div>
+            <div class="service-card-tag">Full House Renovation</div>
+            <div class="service-card-title">Complete Transformation</div>
+            <div class="service-card-arrow">
+              <span>Explore</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+        <div class="service-card svc-extension fade-in-up" onclick="showPage('extension')">
+          <div class="service-card-bg" style="background:url('images/hero-extension.png') center/cover no-repeat;filter:brightness(0.35);"></div>
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-card-num">04</div>
+            <div class="service-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+            <div class="service-card-tag">House Extension</div>
+            <div class="service-card-title">Expand Your Space</div>
+            <div class="service-card-arrow">
+              <span>Explore</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section dark-2-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Why Choose Us</span>
+        <h2 class="section-title">Built on <em>Trust</em> & Excellence</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="why-grid">
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-medal"></i></div>
+          <div class="why-card-title">Award-Winning Quality</div>
+          <p class="why-card-text">Recognised by the Federation of Master Builders for outstanding workmanship. Every project is delivered to the highest standard with no compromise.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-clock"></i></div>
+          <div class="why-card-title">On Time, On Budget</div>
+          <p class="why-card-text">We respect your time and investment. Our project management ensures every job is completed within the agreed timeline and budget — guaranteed.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-shield-alt"></i></div>
+          <div class="why-card-title">Fully Insured & Guaranteed</div>
+          <p class="why-card-text">All works come with a comprehensive 10-year workmanship guarantee and full public liability insurance up to £5 million for complete peace of mind.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-drafting-compass"></i></div>
+          <div class="why-card-title">Design-Led Approach</div>
+          <p class="why-card-text">Our in-house design team collaborates with you at every stage, creating bespoke solutions that reflect your personal style and functional requirements.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-leaf"></i></div>
+          <div class="why-card-title">Sustainable Materials</div>
+          <p class="why-card-text">We source ethically produced, sustainable materials wherever possible, ensuring your renovation is beautiful, durable, and environmentally responsible.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-headset"></i></div>
+          <div class="why-card-title">Dedicated Project Manager</div>
+          <p class="why-card-text">From your first consultation to final handover, you'll have a dedicated project manager as your single point of contact throughout the entire process.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section class="section calculator-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Project Pricing</span>
+        <h2 class="section-title">Estimate Your <em>Project</em></h2>
+        <p class="section-desc">Use our instant calculator to get a rough estimate for your renovation project based on London 2026 market rates.</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="calc-wrap fade-in-up">
+        <div class="price-info">
+          <div class="price-info-item">
+            <div class="pi-service">Bathroom</div>
+            <div class="pi-price">£1,200</div>
+            <div class="pi-unit">per m²</div>
+          </div>
+          <div class="price-info-item">
+            <div class="pi-service">Kitchen</div>
+            <div class="pi-price">£1,350</div>
+            <div class="pi-unit">per m²</div>
+          </div>
+          <div class="price-info-item">
+            <div class="pi-service">Full House</div>
+            <div class="pi-price">£1,800</div>
+            <div class="pi-unit">per m²</div>
+          </div>
+          <div class="price-info-item">
+            <div class="pi-service">Extension</div>
+            <div class="pi-price">£1,500</div>
+            <div class="pi-unit">per m²</div>
+          </div>
+        </div>
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label>Project Type</label>
+            <select id="calcType" onchange="calculate()">
+              <option value="1200">Bathroom Renovation (£1,200/m²)</option>
+              <option value="1350">Kitchen Renovation (£1,350/m²)</option>
+              <option value="1800">Full House Renovation (£1,800/m²)</option>
+              <option value="1500">House Extension (£1,500/m²)</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Area (Square Metres)</label>
+            <input type="number" id="calcArea" value="20" min="1" max="1000" oninput="calculate()" placeholder="Enter m²"/>
+          </div>
+          <div class="calc-field">
+            <label>Finish Level</label>
+            <select id="calcFinish" onchange="calculate()">
+              <option value="1">Standard Finish (×1.0)</option>
+              <option value="1.25" selected>Premium Finish (×1.25)</option>
+              <option value="1.6">Luxury Finish (×1.6)</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Structural Work</label>
+            <select id="calcStructural" onchange="calculate()">
+              <option value="0">None</option>
+              <option value="5000">Minor (+ £5,000)</option>
+              <option value="15000">Moderate (+ £15,000)</option>
+              <option value="35000">Major (+ £35,000)</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-label">Estimated Project Cost</div>
+          <div class="calc-result-amount" id="calcAmount">£30,000</div>
+          <div class="calc-result-note">Indicative estimate · VAT may apply · Subject to survey</div>
+        </div>
+        <button class="calc-btn" onclick="showPage('contact')">Request a Detailed Quote →</button>
+        <p class="calc-disclaimer">This calculator provides a rough estimate only. Final pricing depends on site survey, material selections, and project complexity. All prices are inclusive of labour for London 2026. Contact us for a free, detailed quotation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section reviews-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Client Testimonials</span>
+        <h2 class="section-title">What Our Clients <em>Say</em></h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card fade-in-up">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-quote">"</div>
+          <p class="review-text">EleganceBuilt transformed our dated bathroom into an absolute sanctuary. The attention to detail was extraordinary — every tile perfectly aligned, every fixture immaculate. Truly beyond our expectations.</p>
+          <div class="review-author">
+            <div class="review-avatar">S</div>
+            <div>
+              <div class="review-name">Sarah & James M.</div>
+              <div class="review-area">Kensington, London</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card fade-in-up">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-quote">"</div>
+          <p class="review-text">The kitchen renovation exceeded every expectation. They listened to exactly what we wanted, offered brilliant design suggestions, and delivered on time. The result is simply stunning.</p>
+          <div class="review-author">
+            <div class="review-avatar">R</div>
+            <div>
+              <div class="review-name">Robert & Claire T.</div>
+              <div class="review-area">Chelsea, London</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card fade-in-up">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-quote">"</div>
+          <p class="review-text">Our rear extension added incredible value to our home. EleganceBuilt handled everything from planning to final handover with complete professionalism. We couldn't be happier.</p>
+          <div class="review-author">
+            <div class="review-avatar">A</div>
+            <div>
+              <div class="review-name">Amelia & David K.</div>
+              <div class="review-area">Hampstead, London</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEAVE A REVIEW -->
+      <div class="leave-review fade-in-up">
+        <div class="review-form-grid">
+          <div class="form-field">
+            <label>Your Name</label>
+            <input type="text" placeholder="Full name" />
+          </div>
+          <div class="form-field">
+            <label>Location</label>
+            <input type="text" placeholder="e.g. Notting Hill, London" />
+          </div>
+          <div class="form-field">
+            <label>Service Used</label>
+            <select>
+              <option>Bathroom Renovation</option>
+              <option>Kitchen Renovation</option>
+              <option>Full House Renovation</option>
+              <option>House Extension</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Your Rating</label>
+            <div class="review-stars-input" id="starInput">
+              <i class="fas fa-star" data-star="1"></i>
+              <i class="fas fa-star" data--star="2"></i>
+              <i class="fas fa-star" data-star="3"></i>
+              <i class="fas fa-star" data-star="4"></i>
+              <i class="fas fa-star" data-star="5"></i>
+            </div>
+          </div>
+          <div class="form-field full">
+            <label>Your Review</label>
+            <textarea rows="4" placeholder="Tell us about your experience with EleganceBuilt..."></textarea>
+          </div>
+        </div>
+        <button class="review-submit">Submit Your Review</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+<!-- END HOME PAGE -->
+
+
+<!-- ========================= BATHROOM PAGE ========================= -->
+<div class="page" id="page-bathroom">
+  <div class="service-hero" style="margin-top:80px">
+    <div class="service-hero-bg">
+      <div class="sh-gradient" style="background:url('images/hero-bathroom.png') center/cover no-repeat;"></div>
+      <div class="sh-pattern"></div>
+    </div>
+    <div class="service-hero-content">
+      <div class="service-hero-label">Our Services</div>
+      <h1 class="service-hero-title">Bathroom <strong>Renovation</strong></h1>
+    </div>
+  </div>
+
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Service Overview</span>
+        <h2 class="section-title">Your Private <em>Sanctuary</em></h2>
+        <p class="section-desc">We believe every bathroom should be a place of genuine luxury — a retreat from the world. Our bathroom renovation service transforms even the most tired space into something truly exceptional.</p>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="why-grid" style="margin-bottom:5rem">
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-pencil-ruler"></i></div>
+          <div class="why-card-title">Bespoke Design</div>
+          <p class="why-card-text">Full design consultation including 3D renders of your new bathroom before a single tile is laid. You'll see exactly how your space will look.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-tools"></i></div>
+          <div class="why-card-title">Complete Installation</div>
+          <p class="why-card-text">From full plumbing to tiling, from underfloor heating to bespoke cabinetry — we handle every element in-house with our skilled tradespeople.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-gem"></i></div>
+          <div class="why-card-title">Premium Materials</div>
+          <p class="why-card-text">We source materials from leading European suppliers — Italian marble, hand-crafted tapware, and designer sanitaryware for a truly luxurious finish.</p>
+        </div>
+      </div>
+
+      <div class="section-header fade-in-up">
+        <span class="section-label">Our Work</span>
+        <h2 class="section-title">Before & <em>After</em></h2>
+        <p class="section-desc">Drag the slider to reveal each transformation.</p>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="ba-grid">
+        <!-- Project 1 -->
+        <div class="ba-project fade-in-up">
+          <div class="ba-slider-wrap" data-slider="true">
+            <div class="ba-before" style="background:url('images/bathroom-after.png') center/cover no-repeat;"></div>
+            <div class="ba-after" style="background:url('images/bathroom-before.png') center/cover no-repeat;"></div>
+            <div class="ba-divider" style="left:50%"></div>
+            <div class="ba-label before">Before</div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-info">
+            <div class="ba-project-title">The Kensington Suite</div>
+            <div class="ba-project-location">Kensington, West London</div>
+            <p class="ba-project-desc">Our client requested a complete transformation of their 8m² main bathroom into a spa-inspired sanctuary. The challenge was maximising the sense of space while incorporating a freestanding bath, walk-in shower, and double vanity. We achieved this through the use of large-format Italian marble tiles laid in a book-match pattern, a custom floating vanity unit with integrated LED lighting, and a frameless glass shower enclosure. Underfloor heating was installed throughout, and the palette of warm whites and brushed gold complemented the Georgian architecture of the property.</p>
+          </div>
+        </div>
+        <!-- Project 2 -->
+        <div class="ba-project fade-in-up">
+          <div class="ba-slider-wrap" data-slider="true">
+            <div class="ba-before" style="background:url('images/bathroom_after\ 1.png') center/cover no-repeat;"></div>
+            <div class="ba-after" style="background:url('images/bathroom_before\ 1.png') center/cover no-repeat;"></div>
+            <div class="ba-divider" style="left:50%"></div>
+            <div class="ba-label before">Before</div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-info">
+            <div class="ba-project-title">The Chelsea Wet Room</div>
+            <div class="ba-project-location">Chelsea, South London</div>
+            <p class="ba-project-desc">This compact 5m² bathroom in a Chelsea townhouse was entirely reimagined as a sophisticated wet room. The client's brief was dramatic and bold — they wanted their bathroom to feel like a five-star hotel. We stripped back to the shell, installed tanking throughout, and used deep charcoal slate tiles contrasted with polished chrome fittings and a rainfall shower head. Custom niches were built into the walls for product storage, maintaining completely clean lines. The result is a strikingly minimal space that feels both intimate and expansive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="bathroom-footer"></div>
+</div>
+
+<!-- ========================= KITCHEN PAGE ========================= -->
+<div class="page" id="page-kitchen">
+  <div class="service-hero">
+    <div class="service-hero-bg">
+      <div class="sh-gradient" style="background:url('images/hero-kitchen.png') center/cover no-repeat;"></div>
+      <div class="sh-pattern"></div>
+    </div>
+    <div class="service-hero-content">
+      <div class="service-hero-label">Our Services</div>
+      <h1 class="service-hero-title">Kitchen <strong>Renovation</strong></h1>
+    </div>
+  </div>
+
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Service Overview</span>
+        <h2 class="section-title">The Heart of <em>Your Home</em></h2>
+        <p class="section-desc">A kitchen renovation is one of the most impactful investments you can make in your home. We design and build kitchens that are as functional as they are beautiful — perfectly tailored to how you live.</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="why-grid" style="margin-bottom:5rem">
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-palette"></i></div>
+          <div class="why-card-title">Tailored Design</div>
+          <p class="why-card-text">Our designers work with you to create a kitchen that perfectly suits your cooking style, entertaining habits, and aesthetic preferences.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-bolt"></i></div>
+          <div class="why-card-title">Full Integration</div>
+          <p class="why-card-text">Complete electrical, plumbing, and structural work alongside appliance integration, ensuring everything is seamlessly connected and perfectly placed.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-star"></i></div>
+          <div class="why-card-title">Premium Brands</div>
+          <p class="why-card-text">We work with leading kitchen manufacturers and can supply and install appliances from Miele, Siemens, AEG, and other premium brands at competitive prices.</p>
+        </div>
+      </div>
+
+      <div class="section-header fade-in-up">
+        <span class="section-label">Our Work</span>
+        <h2 class="section-title">Before & <em>After</em></h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="ba-grid">
+        <div class="ba-project fade-in-up">
+          <div class="ba-slider-wrap" data-slider="true">
+            <div class="ba-before" style="background:url('images/kitchen-after.png') center/cover no-repeat;"></div>
+            <div class="ba-after" style="background:url('images/kitchen-before.png') center/cover no-repeat;"></div>
+            <div class="ba-divider" style="left:50%"></div>
+            <div class="ba-label before">Before</div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-info">
+            <div class="ba-project-title">The Hampstead Open Plan</div>
+            <div class="ba-project-location">Hampstead, North London</div>
+            <p class="ba-project-desc">The clients desired a complete open-plan transformation of their separate kitchen and dining room into a single, flowing social space. We removed a non-structural partition wall, installed RSJ steels, and created a stunning 28m² kitchen-diner. The design centred around a 3-metre island in honed Calacatta marble with waterfall edges, complemented by handleless matte lacquer cabinetry in Deep Navy. Integrated Miele appliances, a wine cooler, and feature pendant lighting completed the look. The result dramatically increased the home's value while creating the family hub our clients had always dreamed of.</p>
+          </div>
+        </div>
+        <div class="ba-project fade-in-up">
+          <div class="ba-slider-wrap" data-slider="true">
+            <div class="ba-before" style="background:url('images/kitchen_after\ 1.png') center/cover no-repeat;"></div>
+            <div class="ba-after" style="background:url('images/kitchen_before\ 1.png') center/cover no-repeat;"></div>
+            <div class="ba-divider" style="left:50%"></div>
+            <div class="ba-label before">Before</div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-info">
+            <div class="ba-project-title">The Notting Hill Galley</div>
+            <div class="ba-project-location">Notting Hill, West London</div>
+            <p class="ba-project-desc">A narrow 12m² galley kitchen was completely reinvented using clever spatial design to maximise every centimetre. Floor-to-ceiling cabinetry with push-to-open mechanisms eliminated visual clutter. A bespoke breakfast bar with waterfall quartz countertop was cantilevered from the wall, creating space for three bar stools without impeding the workflow. The clever use of mirrored splashbacks and under-cabinet LED lighting made the space feel twice its actual size. This project demonstrated how expert design can transform even the most challenging proportions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="kitchen-footer"></div>
+</div>
+
+<!-- ========================= HOUSE RENOVATION PAGE ========================= -->
+<div class="page" id="page-house">
+  <div class="service-hero">
+    <div class="service-hero-bg">
+      <div class="sh-gradient" style="background:url('images/hero-house.png') center/cover no-repeat;"></div>
+      <div class="sh-pattern"></div>
+    </div>
+    <div class="service-hero-content">
+      <div class="service-hero-label">Our Services</div>
+      <h1 class="service-hero-title">Full House <strong>Renovation</strong></h1>
+    </div>
+  </div>
+
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Service Overview</span>
+        <h2 class="section-title">Total Home <em>Transformation</em></h2>
+        <p class="section-desc">A full house renovation requires vision, coordination, and expertise. We manage every aspect of your project — from structural alterations and rewiring to interior finishes and final decoration — with seamless professionalism.</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="why-grid" style="margin-bottom:5rem">
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-sitemap"></i></div>
+          <div class="why-card-title">Full Project Management</div>
+          <p class="why-card-text">One company, one contract, zero stress. We coordinate every trade — structural engineers, electricians, plumbers, decorators — under a single, transparent agreement.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-file-contract"></i></div>
+          <div class="why-card-title">Planning Permission Support</div>
+          <p class="why-card-text">Our experienced team assists with permitted development rights, planning applications, and building regulations to ensure your project proceeds without delay.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="why-card-title">Value Enhancement</div>
+          <p class="why-card-text">A well-executed full renovation can increase your property's value by 20–40%. Our design team focuses on improvements that deliver the strongest return on investment.</p>
+        </div>
+      </div>
+
+      <div class="section-header fade-in-up">
+        <span class="section-label">Our Work</span>
+        <h2 class="section-title">Before & <em>After</em></h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="ba-grid">
+        <div class="ba-project fade-in-up">
+          <div class="ba-slider-wrap" data-slider="true">
+            <div class="ba-before" style="background:url('images/house-after.png') center/cover no-repeat;"></div>
+            <div class="ba-after" style="background:url('images/house-before.png') center/cover no-repeat;"></div>
+            <div class="ba-divider" style="left:50%"></div>
+            <div class="ba-label before">Before</div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-info">
+            <div class="ba-project-title">The Islington Victorian Terrace</div>
+            <div class="ba-project-location">Islington, North London</div>
+            <p class="ba-project-desc">This four-bedroom Victorian terrace had not been touched since the 1980s. The clients required a sensitive renovation that would restore the home's period character while bringing it fully into the 21st century. Working over 14 weeks, we rewired the entire property, replaced all plumbing, installed a new gas-fired underfloor heating system, and refurbished all five rooms and two bathrooms. Original cornicing was repaired and reinstated, Victorian floorboards were restored and refinished, and a new kitchen extension was added at the rear. The property was subsequently valued at 38% above its pre-renovation market price.</p>
+          </div>
+        </div>
+        <div class="ba-project fade-in-up">
+          <div class="ba-slider-wrap" data-slider="true">
+            <div class="ba-before" style="background:url('images/house_refurb_after\ 1.png') center/cover no-repeat;"></div>
+            <div class="ba-after" style="background:url('images/house_refurb_before\ 1.png') center/cover no-repeat;"></div>
+            <div class="ba-divider" style="left:50%"></div>
+            <div class="ba-label before">Before</div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-info">
+            <div class="ba-project-title">The Ealing Edwardian Refurbishment</div>
+            <div class="ba-project-location">Ealing, West London</div>
+            <p class="ba-project-desc">An Edwardian semi-detached property required complete refurbishment following purchase from probate. Every room was stripped to the bare shell and rebuilt to an exceptionally high standard. The ground floor was fully opened up, creating a cohesive flow from entrance hall through to the garden. A complete rewire to 18th Edition standards was undertaken, alongside a full replumb with unvented hot water cylinder. New oak flooring was laid throughout the ground floor, and bespoke fitted wardrobes installed in all four bedrooms. The project was completed in 16 weeks, on time and on budget.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="house-footer"></div>
+</div>
+
+<!-- ========================= EXTENSION PAGE ========================= -->
+<div class="page" id="page-extension">
+  <div class="service-hero">
+    <div class="service-hero-bg">
+      <div class="sh-gradient" style="background:url('images/hero-extension.png') center/cover no-repeat;"></div>
+      <div class="sh-pattern"></div>
+    </div>
+    <div class="service-hero-content">
+      <div class="service-hero-label">Our Services</div>
+      <h1 class="service-hero-title">House <strong>Extensions</strong></h1>
+    </div>
+  </div>
+
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Service Overview</span>
+        <h2 class="section-title">Extend Your <em>Vision</em></h2>
+        <p class="section-desc">Whether you're adding a rear extension, side return, loft conversion, or basement, EleganceBuilt has the expertise to deliver a seamlessly integrated addition that transforms how your home functions and feels.</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="why-grid" style="margin-bottom:5rem">
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-ruler-combined"></i></div>
+          <div class="why-card-title">Architectural Design</div>
+          <p class="why-card-text">Our in-house architectural team creates designs that are both structurally sound and beautifully proportioned, respecting the existing character of your home.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-file-alt"></i></div>
+          <div class="why-card-title">Planning & Permissions</div>
+          <p class="why-card-text">We handle the entire planning process — from permitted development assessment through to full planning applications and building regulations approval.</p>
+        </div>
+        <div class="why-card fade-in-up">
+          <div class="why-card-icon"><i class="fas fa-puzzle-piece"></i></div>
+          <div class="why-card-title">Seamless Integration</div>
+          <p class="why-card-text">The mark of a great extension is that it feels like it was always there. Our finishing team ensures a perfect match with your existing property inside and out.</p>
+        </div>
+      </div>
+
+      <div class="section-header fade-in-up">
+        <span class="section-label">Our Work</span>
+        <h2 class="section-title">Before & <em>After</em></h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="ba-grid">
+        <div class="ba-project fade-in-up">
+          <div class="ba-slider-wrap" data-slider="true">
+            <div class="ba-before" style="background:url('images/extension-after.png') center/cover no-repeat;"></div>
+            <div class="ba-after" style="background:url('images/extension-before.png') center/cover no-repeat;"></div>
+            <div class="ba-divider" style="left:50%"></div>
+            <div class="ba-label before">Before</div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-info">
+            <div class="ba-project-title">The Fulham Rear Extension</div>
+            <div class="ba-project-location">Fulham, South West London</div>
+            <p class="ba-project-desc">This 32m² rear extension and full-width side return transformed a cramped Victorian terrace into a spectacular open-plan kitchen, dining, and family space. The client's brief was to create a light-filled space that connected directly to the garden and could accommodate the whole family comfortably. We installed full-width bifold doors across the rear elevation, a rooflight running the entire length of the original rear wall junction, and a structural glass skylight above the dining area. Heated polished concrete floors, a bespoke kitchen, and seamless garden connection created the perfect indoor-outdoor home. Permitted development rights applied; no planning permission was required.</p>
+          </div>
+        </div>
+        <div class="ba-project fade-in-up">
+          <div class="ba-slider-wrap" data-slider="true">
+            <div class="ba-before" style="background:url('images/house_extension_after\ 1.png') center/cover no-repeat;"></div>
+            <div class="ba-after" style="background:url('images/house_extension_before\ 1.png') center/cover no-repeat;"></div>
+            <div class="ba-divider" style="left:50%"></div>
+            <div class="ba-label before">Before</div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-info">
+            <div class="ba-project-title">The Wandsworth Loft Conversion</div>
+            <div class="ba-project-location">Wandsworth, South London</div>
+            <p class="ba-project-desc">A dormer loft conversion added a stunning 45m² master suite to this Wandsworth semi-detached property, including a full walk-in dressing room and en-suite bathroom. The brief was for something that felt more boutique hotel than typical loft conversion. Working within the permitted development envelope, we created a full-width dormer with Juliet balcony to the rear, preserving the roof pitches to the front. The master bedroom features vaulted ceilings with exposed oak trusses, a bespoke dressing room with his-and-hers wardrobes, and a spa-quality en-suite with steam shower and heated floors. The addition increased the property's value by over £180,000.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="extension-footer"></div>
+</div>
+
+<!-- ========================= PORTFOLIO PAGE ========================= -->
+<div class="page" id="page-portfolio">
+  <div class="service-hero">
+    <div class="service-hero-bg">
+      <div class="sh-gradient" style="background:url('images/hero-kitchen.png') center/cover no-repeat;"></div>
+      <div class="sh-pattern"></div>
+    </div>
+    <div class="service-hero-content">
+      <div class="service-hero-label">Our Work</div>
+      <h1 class="service-hero-title">Project <strong>Portfolio</strong></h1>
+    </div>
+  </div>
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Selected Projects</span>
+        <h2 class="section-title">Crafted with <em>Purpose</em></h2>
+        <p class="section-desc">Every project in our portfolio represents a unique story — a client's vision brought to life through our expertise and dedication.</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="gallery-filters fade-in-up">
+        <button class="filter-btn active" onclick="filterGallery('all',this)">All Projects</button>
+        <button class="filter-btn" onclick="filterGallery('bathroom',this)">Bathrooms</button>
+        <button class="filter-btn" onclick="filterGallery('kitchen',this)">Kitchens</button>
+        <button class="filter-btn" onclick="filterGallery('house',this)">Full House</button>
+        <button class="filter-btn" onclick="filterGallery('extension',this)">Extensions</button>
+      </div>
+      <div class="gallery-grid" id="portfolioGrid">
+        <div class="gallery-item fade-in-up" data-cat="bathroom">
+          <div class="gallery-item-inner" style="background:url('images/hero-bathroom.png') center/cover no-repeat;"></div>
+          <div class="gallery-item-overlay">
+            <span>Kensington Suite</span>
+            <small>Bathroom · 2024</small>
+          </div>
+        </div>
+        <div class="gallery-item fade-in-up" data-cat="kitchen">
+          <div class="gallery-item-inner" style="background:url('images/hero-kitchen.png') center/cover no-repeat;"></div>
+          <div class="gallery-item-overlay">
+            <span>Hampstead Kitchen</span>
+            <small>Kitchen · 2024</small>
+          </div>
+        </div>
+        <div class="gallery-item fade-in-up" data-cat="extension">
+          <div class="gallery-item-inner" style="background:url('images/hero-extension.png') center/cover no-repeat;"></div>
+          <div class="gallery-item-overlay">
+            <span>Fulham Extension</span>
+            <small>Extension · 2024</small>
+          </div>
+        </div>
+        <div class="gallery-item fade-in-up" data-cat="house">
+          <div class="gallery-item-inner" style="background:url('images/hero-house.png') center/cover no-repeat;"></div>
+          <div class="gallery-item-overlay">
+            <span>Islington Victorian</span>
+            <small>Full House · 2023</small>
+          </div>
+        </div>
+        <div class="gallery-item fade-in-up" data-cat="bathroom">
+          <div class="gallery-item-inner" style="background:var(--dark-3)">
+            <div class="gallery-item-icon">🛁</div>
+            <div class="gallery-item-label">Upload Project Image</div>
+          </div>
+          <div class="gallery-item-overlay">
+            <span>Chelsea Wet Room</span>
+            <small>Bathroom · 2023</small>
+          </div>
+        </div>
+        <div class="gallery-item fade-in-up" data-cat="extension">
+          <div class="gallery-item-inner" style="background:var(--dark-4)">
+            <div class="gallery-item-icon">🏗️</div>
+            <div class="gallery-item-label">Upload Project Image</div>
+          </div>
+          <div class="gallery-item-overlay">
+            <span>Wandsworth Loft</span>
+            <small>Extension · 2023</small>
+          </div>
+        </div>
+        <div class="gallery-item fade-in-up" data-cat="kitchen">
+          <div class="gallery-item-inner" style="background:var(--dark-3)">
+            <div class="gallery-item-icon">🍳</div>
+            <div class="gallery-item-label">Upload Project Image</div>
+          </div>
+          <div class="gallery-item-overlay">
+            <span>Notting Hill Galley</span>
+            <small>Kitchen · 2023</small>
+          </div>
+        </div>
+        <div class="gallery-item fade-in-up" data-cat="house">
+          <div class="gallery-item-inner" style="background:var(--dark-4)">
+            <div class="gallery-item-icon">🏠</div>
+            <div class="gallery-item-label">Upload Project Image</div>
+          </div>
+          <div class="gallery-item-overlay">
+            <span>Ealing Edwardian</span>
+            <small>Full House · 2022</small>
+          </div>
+        </div>
+        <div class="gallery-item fade-in-up" data-cat="bathroom">
+          <div class="gallery-item-inner" style="background:var(--dark-3)">
+            <div class="gallery-item-icon">🛁</div>
+            <div class="gallery-item-label">Upload Project Image</div>
+          </div>
+          <div class="gallery-item-overlay">
+            <span>Richmond Family Bath</span>
+            <small>Bathroom · 2022</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="portfolio-footer"></div>
+</div>
+
+<!-- ========================= GALLERY PAGE ========================= -->
+<div class="page" id="page-gallery">
+  <div class="service-hero">
+    <div class="service-hero-bg">
+      <div class="sh-gradient" style="background:linear-gradient(135deg,#0f0f1a 0%,#0a0a0a 100%)"></div>
+      <div class="sh-pattern"></div>
+    </div>
+    <div class="service-hero-content">
+      <div class="service-hero-label">Inspiration</div>
+      <h1 class="service-hero-title">Project <strong>Gallery</strong></h1>
+    </div>
+  </div>
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Visual Portfolio</span>
+        <h2 class="section-title">Our <em>Finest</em> Work</h2>
+        <p class="section-desc">A curated collection of our most striking transformations across London. Add your project images to populate this gallery.</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-3)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-4)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-3)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-4)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-3)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-4)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-3)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-4)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+        <div class="gallery-item fade-in-up" style="aspect-ratio:1/1">
+          <div class="gallery-item-inner" style="background:var(--dark-3)"><div class="gallery-item-icon" style="font-size:3rem">🖼️</div><div class="gallery-item-label">Add Project Photo</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="gallery-footer"></div>
+</div>
+
+<!-- ========================= ABOUT PAGE ========================= -->
+<div class="page" id="page-about">
+  <div class="service-hero">
+    <div class="service-hero-bg">
+      <div class="sh-gradient" style="background:linear-gradient(135deg,#1a1a0a 0%,#0a0a0a 100%)"></div>
+      <div class="sh-pattern"></div>
+    </div>
+    <div class="service-hero-content">
+      <div class="service-hero-label">Our Story</div>
+      <h1 class="service-hero-title">About <strong>EleganceBuilt</strong></h1>
+    </div>
+  </div>
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="about-grid fade-in-up">
+        <div class="about-visual">
+          <div class="about-visual-bg">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="30,5 55,20 55,60 30,75 5,60 5,20" fill="none" stroke="#c9a84c" stroke-width="1"/>
+              <polygon points="30,15 45,25 45,55 30,65 15,55 15,25" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.5"/>
+              <circle cx="30" cy="40" r="8" fill="#c9a84c" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="about-visual-accent"></div>
+        </div>
+        <div class="about-text">
+          <span class="section-label">Who We Are</span>
+          <h2 class="section-title">Building <em>London's</em> Finest Homes Since 2020</h2>
+          <div class="about-quote">
+            <p>"We don't just renovate properties. We transform the way people live in their homes."</p>
+          </div>
+          <p class="section-desc" style="margin-bottom:1.5rem">Founded in 2020 by master craftsman and architect duo Marcus Webb and Elena Kovacs, EleganceBuilt has grown from a small specialist tiling company into one of London's most respected renovation firms, completing over 150 projects across the capital.</p>
+          <p class="section-desc">Our philosophy is simple: every client deserves the very best. We combine old-world craftsmanship with contemporary design thinking to deliver transformations that genuinely improve how people experience their homes. Every member of our team shares this commitment to excellence.</p>
+        </div>
+      </div>
+
+      <div class="section-header fade-in-up" style="margin-top:4rem">
+        <span class="section-label">Our People</span>
+        <h2 class="section-title">Meet the <em>Team</em></h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="team-grid">
+        <div class="team-card fade-in-up">
+          <div class="team-avatar">M</div>
+          <div class="team-name">KUSAI ALWADI</div>
+          <div class="team-role">Founder & Master Builder</div>
+        </div>
+        <div class="team-card fade-in-up">
+          <div class="team-avatar">E</div>
+          <div class="team-name">MOHAMMAD ALWADI</div>
+          <div class="team-role">Co-Founder & Head of Design</div>
+        </div>
+        <div class="team-card fade-in-up">
+          <div class="team-avatar">J</div>
+          <div class="team-name">KUSAI ALWADI</div>
+          <div class="team-role">Senior Project Manager & Civil/Structural Engineer</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="about-footer"></div>
+</div>
+
+<!-- ========================= CONTACT PAGE ========================= -->
+<div class="page" id="page-contact">
+  <div class="service-hero">
+    <div class="service-hero-bg">
+      <div class="sh-gradient" style="background:linear-gradient(135deg,#1a1208 0%,#0a0a0a 100%)"></div>
+      <div class="sh-pattern"></div>
+    </div>
+    <div class="service-hero-content">
+      <div class="service-hero-label">Get in Touch</div>
+      <h1 class="service-hero-title">Request a <strong>Quote</strong></h1>
+    </div>
+  </div>
+  <section class="section dark-section">
+    <div class="section-inner">
+      <div class="section-header fade-in-up">
+        <span class="section-label">Start Your Project</span>
+        <h2 class="section-title">Let's <em>Create</em> Together</h2>
+        <p class="section-desc">Tell us about your project and we'll arrange a free consultation and detailed quotation, usually within 48 hours.</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="contact-grid fade-in-up">
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <div class="contact-info-label"><i class="fas fa-map-marker-alt" style="margin-right:0.5rem;color:var(--gold)"></i> Our Office</div>
+            <div class="contact-info-value">4 Garnet Road, London NW10 9HX</div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-label"><i class="fas fa-phone" style="margin-right:0.5rem;color:var(--gold)"></i> Phone</div>
+            <div class="contact-info-value">+44 7493302466</div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-label"><i class="fas fa-envelope" style="margin-right:0.5rem;color:var(--gold)"></i> Email</div>
+            <div class="contact-info-value"><a href="mailto:elegancebuiltltd@gmail.com">elegancebuiltltd@gmail.com</a></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-label"><i class="fab fa-whatsapp" style="margin-right:0.5rem;color:var(--gold)"></i> WhatsApp</div>
+            <div class="contact-info-value">+44 7493302466</div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-label"><i class="fas fa-clock" style="margin-right:0.5rem;color:var(--gold)"></i> Working Hours</div>
+            <div class="contact-info-value">Mon–Fri: 8am–6pm<br>Sat: 9am–3pm</div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <div class="contact-form-grid">
+            <div class="form-field">
+              <label>First Name</label>
+              <input type="text" placeholder="Your first name" />
+            </div>
+            <div class="form-field">
+              <label>Last Name</label>
+              <input type="text" placeholder="Your last name" />
+            </div>
+            <div class="form-field">
+              <label>Email Address</label>
+              <input type="email" placeholder="your@email.com" />
+            </div>
+            <div class="form-field">
+              <label>Phone Number</label>
+              <input type="tel" placeholder="+44 7xxx xxx xxx" />
+            </div>
+            <div class="form-field full">
+              <label>Property Address</label>
+              <input type="text" placeholder="Your London property address" />
+            </div>
+            <div class="form-field">
+              <label>Service Required</label>
+              <select>
+                <option>Bathroom Renovation</option>
+                <option>Kitchen Renovation</option>
+                <option>Full House Renovation</option>
+                <option>House Extension</option>
+                <option>Multiple Services</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Estimated Budget</label>
+              <select>
+                <option>Under £20,000</option>
+                <option>£20,000 – £50,000</option>
+                <option>£50,000 – £100,000</option>
+                <option>£100,000 – £250,000</option>
+                <option>Over £250,000</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label>Project Description</label>
+              <textarea rows="5" placeholder="Tell us about your project — what you're looking to achieve, approximate timescale, and any specific requirements..."></textarea>
+            </div>
+          </div>
+          <button class="calc-btn" style="margin-top:1.5rem" onclick="submitForm()">Send Enquiry →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="contact-footer"></div>
+</div>
+
+
+<!-- ========================= FOOTER TEMPLATE ========================= -->
+<template id="footerTemplate">
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">EleganceBuilt</div>
+          <p class="footer-brand-desc">London's premier renovation specialists, delivering exceptional craftsmanship across bathroom, kitchen, full house renovations, and building extensions since 2020.</p>
+          <div class="footer-social">
+            <a href="#" class="social-link" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/elegancebuilt" class="social-link" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a onclick="showPage('bathroom')">Bathroom Renovation</a></li>
+            <li><a onclick="showPage('kitchen')">Kitchen Renovation</a></li>
+            <li><a onclick="showPage('house')">Full House Renovation</a></li>
+            <li><a onclick="showPage('extension')">House Extensions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a onclick="showPage('about')">About Us</a></li>
+            <li><a onclick="showPage('portfolio')">Portfolio</a></li>
+            <li><a onclick="showPage('gallery')">Gallery</a></li>
+            <li><a onclick="showPage('contact')">Get a Quote</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+447493302466">+44 7493302466</a></li>
+            <li><a href="mailto:elegancebuiltltd@gmail.com">elegancebuiltltd@gmail.com</a></li>
+            <li><a href="#">4 Garnet Road, London NW10 9HX</a></li>
+            <li><a href="https://wa.me/447493302466" target="_blank">WhatsApp Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 EleganceBuilt Ltd. All rights reserved. Registered in England & Wales. Company No. 17079884.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</template>
+
+
+<!-- ========================= JAVASCRIPT ========================= -->
+<script>
+// ===== PAGE NAVIGATION =====
+let currentPage = 'home';
+
+function showPage(page) {
+  const allPages = document.querySelectorAll('.page');
+  allPages.forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) {
+    target.classList.add('active');
+    // Inject footer if not already there
+    injectFooter(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    currentPage = page;
+    // Re-run animations
+    setTimeout(() => {
+      initScrollAnimations();
+      initBeforeAfterSliders();
+    }, 100);
+  }
+}
+
+// ===== FOOTER INJECTION =====
+function injectFooter(page) {
+  const footerId = page + '-footer';
+  const footerEl = document.getElementById(footerId);
+  if (footerEl && footerEl.innerHTML.trim() === '') {
+    const template = document.getElementById('footerTemplate');
+    footerEl.appendChild(template.content.cloneNode(true));
+  }
+}
+
+// Also inject home footer (home page has no footer div, let's add it inline)
+// The home page reviews section ends, so we handle differently
+// Home page footer is managed in HTML directly - let's ensure footer is at the end of home page
+(function() {
+  const homePage = document.getElementById('page-home');
+  if (homePage && !homePage.querySelector('footer')) {
+    const div = document.createElement('div');
+    div.id = 'home-footer';
+    homePage.appendChild(div);
+  }
+})();
+
+// ===== HAMBURGER NAV =====
+function toggleNav() {
+  const ham = document.getElementById('hamburger');
+  const nav = document.getElementById('navDropdown');
+  const overlay = document.getElementById('navOverlay');
+  ham.classList.toggle('open');
+  nav.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+function toggleServicesNav(el) {
+  el.classList.toggle('open');
+  const sub = document.getElementById('servicesSubNav');
+  sub.classList.toggle('open');
+}
+
+// ===== HEADER SCROLL =====
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('mainHeader');
+  header.classList.toggle('scrolled', window.scrollY > 50);
+  // Parallax
+  const parallax = document.getElementById('heroParallax');
+  if (parallax && currentPage === 'home') {
+    parallax.style.transform = `translateY(${window.scrollY * 0.15}px)`;
+  }
+});
+
+// ===== CALCULATOR =====
+function calculate() {
+  const type = parseFloat(document.getElementById('calcType').value) || 1200;
+  const area = parseFloat(document.getElementById('calcArea').value) || 0;
+  const finish = parseFloat(document.getElementById('calcFinish').value) || 1;
+  const structural = parseFloat(document.getElementById('calcStructural').value) || 0;
+  const amount = (type * area * finish) + structural;
+  const formatted = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
+  const el = document.getElementById('calcAmount');
+  if (el) el.textContent = formatted;
+}
+// Initial calculation
+window.addEventListener('load', calculate);
+
+// ===== SCROLL ANIMATIONS =====
+function initScrollAnimations() {
+  const els = document.querySelectorAll('.fade-in-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  els.forEach(el => observer.observe(el));
+}
+
+// ===== COUNTER ANIMATION =====
+function animateCounters() {
+  const counters = document.querySelectorAll('[data-count]');
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-count'));
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          counter.textContent = Math.floor(current) + (counter.closest('.stat-item') && counter.closest('.stat-item').querySelector('.stat-label').textContent.includes('%') ? '%' : '+');
+        }, 16);
+        observer.unobserve(counter);
+      }
+    }, { threshold: 0.5 });
+    observer.observe(counter);
+  });
+}
+
+// ===== BEFORE/AFTER SLIDERS =====
+function initBeforeAfterSliders() {
+  const sliders = document.querySelectorAll('[data-slider="true"]');
+  sliders.forEach(slider => {
+    if (slider._initialized) return;
+    slider._initialized = true;
+    const after = slider.querySelector('.ba-after');
+    const divider = slider.querySelector('.ba-divider');
+    let isDragging = false;
+
+    function updateSlider(x) {
+      const rect = slider.getBoundingClientRect();
+      let pct = ((x - rect.left) / rect.width) * 100;
+      pct = Math.max(5, Math.min(95, pct));
+      after.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      divider.style.left = pct + '%';
+    }
+
+    slider.addEventListener('mousedown', (e) => { isDragging = true; updateSlider(e.clientX); });
+    slider.addEventListener('touchstart', (e) => { isDragging = true; updateSlider(e.touches[0].clientX); }, { passive: true });
+    document.addEventListener('mousemove', (e) => { if (isDragging) updateSlider(e.clientX); });
+    document.addEventListener('touchmove', (e) => { if (isDragging) updateSlider(e.touches[0].clientX); }, { passive: true });
+    document.addEventListener('mouseup', () => isDragging = false);
+    document.addEventListener('touchend', () => isDragging = false);
+  });
+}
+
+// ===== GALLERY FILTER =====
+function filterGallery(cat, btn) {
+  // Update active button
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Filter items
+  document.querySelectorAll('#portfolioGrid .gallery-item').forEach(item => {
+    if (cat === 'all' || item.dataset.cat === cat) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+// ===== STAR RATING =====
+function initStarRating() {
+  const stars = document.querySelectorAll('#starInput i');
+  let selectedRating = 0;
+  stars.forEach((star, index) => {
+    star.addEventListener('mouseover', () => {
+      stars.forEach((s, i) => s.classList.toggle('active', i <= index));
+    });
+    star.addEventListener('mouseout', () => {
+      stars.forEach((s, i) => s.classList.toggle('active', i < selectedRating));
+    });
+    star.addEventListener('click', () => {
+      selectedRating = index + 1;
+      stars.forEach((s, i) => s.classList.toggle('active', i < selectedRating));
+    });
+  });
+}
+
+// ===== FORM SUBMIT =====
+function submitForm() {
+  alert('Thank you for your enquiry! We will contact you within 48 hours to arrange your free consultation.');
+}
+
+
+// ===== INIT =====
+window.addEventListener('load', () => {
+  showPage('home');
+  initScrollAnimations();
+  initBeforeAfterSliders();
+  animateCounters();
+  initStarRating();
+});
+
+</script>
+</body>
+</html>
